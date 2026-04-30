@@ -1,5 +1,4 @@
 src/main.o: ../src/main.c \
- C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/inc/teclado.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/CMSIS/device/stm32f4xx.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/CMSIS/core/core_cm4.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/CMSIS/core/core_cmInstr.h \
@@ -31,9 +30,8 @@ src/main.o: ../src/main.c \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_rng.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_can.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dac.h \
- C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dcmi.h
-
-C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/inc/teclado.h:
+ C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
+ C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/inc/teclado.h
 
 C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/CMSIS/device/stm32f4xx.h:
 
@@ -98,3 +96,5 @@ C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_can.
 C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dac.h:
 
 C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
+
+C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/inc/teclado.h:

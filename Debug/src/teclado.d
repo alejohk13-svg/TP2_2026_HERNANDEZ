@@ -31,7 +31,8 @@ src/teclado.o: ../src/teclado.c \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_rng.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_can.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dac.h \
- C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dcmi.h
+ C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
+ C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_gpio.h
 
 C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/inc/teclado.h:
 
@@ -98,3 +99,5 @@ C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_can.
 C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dac.h:
 
 C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
+
+C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/StdPeriph_Driver/inc/stm32f4xx_gpio.h:
