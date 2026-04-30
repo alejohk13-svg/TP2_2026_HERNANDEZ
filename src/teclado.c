@@ -41,6 +41,7 @@ char mapa[4][4] = {
 };
 
 static char tecla = 0;
+static char tecla_anterior = 0;
 
 // CONFIGURACION DE PINES
 
@@ -118,10 +119,19 @@ static char escanear_teclado(void)
 
 // API
 
-void teclado_update(void) {
-    tecla = escanear_teclado();
-}
+void teclado_update(void)
+{
+    char actual = escanear_teclado();
 
+    if (actual != 0 && tecla_anterior == 0) {
+        // tecla nueva (flanco)
+        tecla = actual;
+    } else {
+        tecla = 0;
+    }
+
+    tecla_anterior = actual;
+}
 char teclado_getKey(void) {
     return tecla;
 }

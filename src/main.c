@@ -41,11 +41,23 @@ int main(void)
         tecla = teclado_getKey();
 
         if (tecla != 0) {
-            GPIO_SetBits(LED_PORT, LED_PIN);
-        } else {
-            GPIO_ResetBits(LED_PORT, LED_PIN);
-        }
 
-        delay(100000);
-    }
-}
+            int veces = 0;
+
+            // convertir char a numero
+            if (tecla >= '0' && tecla <= '9') {
+                veces = (tecla - '0') + 1;
+            } else {
+                // por si apretas A, B, etc
+                veces = 1;
+            }
+
+            for (int i = 0; i < veces; i++) {
+                GPIO_SetBits(LED_PORT, LED_PIN);
+                delay(2000000);
+
+                GPIO_ResetBits(LED_PORT, LED_PIN);
+                delay(2000000);
+            }
+        }
+    }}
