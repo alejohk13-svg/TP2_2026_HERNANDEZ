@@ -8,12 +8,22 @@
   ******************************************************************************
 */
 
-
+#include <teclado.h>
 #include "stm32f4xx.h"
 			
 
 int main(void)
 {
+    teclado_init();
 
-	for(;;);
+    while (1)
+    {
+        teclado_update();
+
+        char t = teclado_getKey();
+
+        if (t != 0) {
+
+        }
+    }
 }

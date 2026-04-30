@@ -1,4 +1,4 @@
-src/main.o: ../src/main.c \
+src/teclado.o: ../src/teclado.c \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/inc/teclado.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/CMSIS/device/stm32f4xx.h \
  C:/Users/Usuario/workspace/TP2_AÑO_Hernandez/CMSIS/core/core_cm4.h \
