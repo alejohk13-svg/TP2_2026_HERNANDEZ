@@ -1,10 +1,6 @@
 #include "teclado.h"
 #include "stm32f4xx_gpio.h"
 
-// =====================
-// PINES
-// =====================
-
 // FILAS
 #define FILA1_PORT GPIOE
 #define FILA1_PIN  GPIO_Pin_8
@@ -31,8 +27,6 @@
 #define COL4_PORT GPIOA
 #define COL4_PIN  GPIO_Pin_0
 
-//MAPEO DEL TECLADO
-
 char mapa[4][4] = {
     {'1','2','3','A'},
     {'4','5','6','B'},
@@ -41,28 +35,39 @@ char mapa[4][4] = {
 };
 
 static char tecla = 0;
-static char tecla_anterior = 0;
 
-// CONFIGURACION DE PINES
+// MAQUINA DE ESTADOS
+
+typedef enum {
+    ESTADO_INICIAL,
+    ESTADO_DETECCION,
+    ESTADO_DEBOUNCE,
+    ESTADO_CONFIRMACION,
+    ESTADO_ESPERA_LIBERACION
+} estado_t;
+
+static estado_t estado = ESTADO_INICIAL;
+static char tecla_detectada = 0;
+static int contador = 0;
+
+#define DEBOUNCE_DELAY 50000
 
 void teclado_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
 
-    // FILAS (SALIDAS)
+    // FILAS
     GPIO_InitStruct.GPIO_Pin = FILA1_PIN | FILA2_PIN | FILA3_PIN | FILA4_PIN;
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-
     GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    //COLUMNAS (ENTRADAS)
+    // COLUMNAS
     GPIO_InitStruct.GPIO_Pin = COL1_PIN | COL2_PIN | COL3_PIN;
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-
     GPIO_Init(GPIOC, &GPIO_InitStruct);
 
     GPIO_InitStruct.GPIO_Pin = COL4_PIN;
@@ -98,8 +103,6 @@ int leer_columna(void) {
     return -1;
 }
 
-// ESCANEO
-
 static char escanear_teclado(void)
 {
     int col;
@@ -117,21 +120,49 @@ static char escanear_teclado(void)
     return 0;
 }
 
-// API
-
 void teclado_update(void)
 {
-    char actual = escanear_teclado();
+    char t = escanear_teclado();
 
-    if (actual != 0 && tecla_anterior == 0) {
-        // tecla nueva (flanco)
-        tecla = actual;
-    } else {
-        tecla = 0;
+    switch(estado)
+    {
+        case ESTADO_INICIAL:
+            tecla = 0;
+            if (t != 0) {
+                tecla_detectada = t;
+                estado = ESTADO_DETECCION;
+            }
+            break;
+
+        case ESTADO_DETECCION:
+            contador = 0;
+            estado = ESTADO_DEBOUNCE;
+            break;
+
+        case ESTADO_DEBOUNCE:
+            contador++;
+            if (contador > DEBOUNCE_DELAY) {
+                estado = ESTADO_CONFIRMACION;
+            }
+            break;
+
+        case ESTADO_CONFIRMACION:
+            if (escanear_teclado() == tecla_detectada) {
+                tecla = tecla_detectada;
+                estado = ESTADO_ESPERA_LIBERACION;
+            } else {
+                estado = ESTADO_INICIAL;
+            }
+            break;
+
+        case ESTADO_ESPERA_LIBERACION:
+            if (escanear_teclado() == 0) {
+                estado = ESTADO_INICIAL;
+            }
+            break;
     }
-
-    tecla_anterior = actual;
 }
+
 char teclado_getKey(void) {
     return tecla;
 }
