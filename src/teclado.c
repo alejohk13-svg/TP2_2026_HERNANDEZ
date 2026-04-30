@@ -1,31 +1,30 @@
 #include "teclado.h"
 #include "stm32f4xx_gpio.h"
 
-// FILAS
-#define FILA1_PORT GPIOE
-#define FILA1_PIN  GPIO_Pin_8
+// ESTRUCTURA DE PIN
 
-#define FILA2_PORT GPIOE
-#define FILA2_PIN  GPIO_Pin_9
+typedef struct {
+    GPIO_TypeDef* puerto;
+    uint16_t pin;
+} pin_t;
 
-#define FILA3_PORT GPIOE
-#define FILA3_PIN  GPIO_Pin_10
+// DEFINICION DE PINES
 
-#define FILA4_PORT GPIOE
-#define FILA4_PIN  GPIO_Pin_11
+pin_t filas[4] = {
+    {GPIOE, GPIO_Pin_8},
+    {GPIOE, GPIO_Pin_9},
+    {GPIOE, GPIO_Pin_10},
+    {GPIOE, GPIO_Pin_11}
+};
 
-// COLUMNAS
-#define COL1_PORT GPIOC
-#define COL1_PIN  GPIO_Pin_0
+pin_t columnas[4] = {
+    {GPIOC, GPIO_Pin_0},
+    {GPIOC, GPIO_Pin_3},
+    {GPIOC, GPIO_Pin_2},
+    {GPIOA, GPIO_Pin_0}
+};
 
-#define COL2_PORT GPIOC
-#define COL2_PIN  GPIO_Pin_3
-
-#define COL3_PORT GPIOC
-#define COL3_PIN  GPIO_Pin_2
-
-#define COL4_PORT GPIOA
-#define COL4_PIN  GPIO_Pin_0
+// MAPA DEL TECLADO
 
 char mapa[4][4] = {
     {'1','2','3','A'},
@@ -52,56 +51,60 @@ static int contador = 0;
 
 #define DEBOUNCE_DELAY 50000
 
+// INIT
+
 void teclado_init(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
 
-    // FILAS
-    GPIO_InitStruct.GPIO_Pin = FILA1_PIN | FILA2_PIN | FILA3_PIN | FILA4_PIN;
+    // FILAS (salidas)
+    GPIO_InitStruct.GPIO_Pin =
+        filas[0].pin | filas[1].pin | filas[2].pin | filas[3].pin;
+
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
     GPIO_InitStruct.GPIO_OType = GPIO_OType_PP;
     GPIO_InitStruct.GPIO_Speed = GPIO_Speed_50MHz;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-    GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-    // COLUMNAS
-    GPIO_InitStruct.GPIO_Pin = COL1_PIN | COL2_PIN | COL3_PIN;
+    GPIO_Init(filas[0].puerto, &GPIO_InitStruct);
+
+    // COLUMNAS (entradas)
+    GPIO_InitStruct.GPIO_Pin =
+        columnas[0].pin | columnas[1].pin | columnas[2].pin;
+
     GPIO_InitStruct.GPIO_Mode = GPIO_Mode_IN;
     GPIO_InitStruct.GPIO_PuPd = GPIO_PuPd_UP;
-    GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.GPIO_Pin = COL4_PIN;
-    GPIO_Init(GPIOA, &GPIO_InitStruct);
+    GPIO_Init(columnas[0].puerto, &GPIO_InitStruct);
+
+    GPIO_InitStruct.GPIO_Pin = columnas[3].pin;
+    GPIO_Init(columnas[3].puerto, &GPIO_InitStruct);
 
     tecla = 0;
 }
 
+
 void filas_high(void) {
-    GPIO_SetBits(FILA1_PORT, FILA1_PIN);
-    GPIO_SetBits(FILA2_PORT, FILA2_PIN);
-    GPIO_SetBits(FILA3_PORT, FILA3_PIN);
-    GPIO_SetBits(FILA4_PORT, FILA4_PIN);
+    for (int i = 0; i < 4; i++) {
+        GPIO_SetBits(filas[i].puerto, filas[i].pin);
+    }
 }
 
 void activar_fila(int f) {
     filas_high();
-
-    switch(f) {
-        case 0: GPIO_ResetBits(FILA1_PORT, FILA1_PIN); break;
-        case 1: GPIO_ResetBits(FILA2_PORT, FILA2_PIN); break;
-        case 2: GPIO_ResetBits(FILA3_PORT, FILA3_PIN); break;
-        case 3: GPIO_ResetBits(FILA4_PORT, FILA4_PIN); break;
-    }
+    GPIO_ResetBits(filas[f].puerto, filas[f].pin);
 }
 
 int leer_columna(void) {
-    if (GPIO_ReadInputDataBit(COL1_PORT, COL1_PIN) == 0) return 0;
-    if (GPIO_ReadInputDataBit(COL2_PORT, COL2_PIN) == 0) return 1;
-    if (GPIO_ReadInputDataBit(COL3_PORT, COL3_PIN) == 0) return 2;
-    if (GPIO_ReadInputDataBit(COL4_PORT, COL4_PIN) == 0) return 3;
-
+    for (int i = 0; i < 4; i++) {
+        if (GPIO_ReadInputDataBit(columnas[i].puerto, columnas[i].pin) == 0) {
+            return i;
+        }
+    }
     return -1;
 }
+
+// ESCANEO
 
 static char escanear_teclado(void)
 {
@@ -119,6 +122,7 @@ static char escanear_teclado(void)
 
     return 0;
 }
+
 
 void teclado_update(void)
 {
@@ -162,6 +166,7 @@ void teclado_update(void)
             break;
     }
 }
+
 
 char teclado_getKey(void) {
     return tecla;
