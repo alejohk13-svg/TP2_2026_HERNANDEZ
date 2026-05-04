@@ -5852,14 +5852,14 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
  .text.RCC_AHB1PeriphClockCmd
                 0x08000374       0x40 StdPeriph_Driver/src/stm32f4xx_rcc.o
                 0x08000374                RCC_AHB1PeriphClockCmd
- .text.delay    0x080003b4       0x20 src/main.o
+ .text.delay    0x080003b4       0x30 src/main.o
                 0x080003b4                delay
  .text.convertir_tecla
-                0x080003d4       0x34 src/main.o
-                0x080003d4                convertir_tecla
+                0x080003e4       0x34 src/main.o
+                0x080003e4                convertir_tecla
  .text.actualizar_tiempo
-                0x08000408       0x68 src/main.o
-                0x08000408                actualizar_tiempo
+                0x08000418       0x58 src/main.o
+                0x08000418                actualizar_tiempo
  .text.parpadear
                 0x08000470       0x54 src/main.o
                 0x08000470                parpadear
@@ -6186,13 +6186,13 @@ LOAD c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17
                 0x00000300       0x22 c:/ac6/systemworkbench/plugins/fr.ac6.mcu.externaltools.arm-none.win32_1.17.0.201812190825/tools/compiler/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
 OUTPUT(TP2_AÑO_Hernandez.elf elf32-littlearm)
 
-.debug_info     0x00000000     0x2322
+.debug_info     0x00000000     0x2338
  .debug_info    0x00000000      0x62b StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_info    0x0000062b      0xe67 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_info    0x00001492      0x3b5 src/main.o
- .debug_info    0x00001847      0x612 src/system_stm32f4xx.o
- .debug_info    0x00001e59      0x4a7 src/teclado.o
- .debug_info    0x00002300       0x22 startup/startup_stm32.o
+ .debug_info    0x00001492      0x3cb src/main.o
+ .debug_info    0x0000185d      0x612 src/system_stm32f4xx.o
+ .debug_info    0x00001e6f      0x4a7 src/teclado.o
+ .debug_info    0x00002316       0x22 startup/startup_stm32.o
 
 .debug_abbrev   0x00000000      0x894
  .debug_abbrev  0x00000000      0x1bf StdPeriph_Driver/src/stm32f4xx_gpio.o
@@ -6232,13 +6232,13 @@ OUTPUT(TP2_AÑO_Hernandez.elf elf32-littlearm)
  .debug_macro   0x00000900      0x1d2 src/system_stm32f4xx.o
  .debug_macro   0x00000ad2      0x1c2 src/teclado.o
 
-.debug_line     0x00000000     0x2640
+.debug_line     0x00000000     0x2645
  .debug_line    0x00000000      0x76e StdPeriph_Driver/src/stm32f4xx_gpio.o
  .debug_line    0x0000076e      0xa62 StdPeriph_Driver/src/stm32f4xx_rcc.o
- .debug_line    0x000011d0      0x6ab src/main.o
- .debug_line    0x0000187b      0x663 src/system_stm32f4xx.o
- .debug_line    0x00001ede      0x6e6 src/teclado.o
- .debug_line    0x000025c4       0x7c startup/startup_stm32.o
+ .debug_line    0x000011d0      0x6b0 src/main.o
+ .debug_line    0x00001880      0x663 src/system_stm32f4xx.o
+ .debug_line    0x00001ee3      0x6e6 src/teclado.o
+ .debug_line    0x000025c9       0x7c startup/startup_stm32.o
 
 .debug_str      0x00000000    0x5fb48
  .debug_str     0x00000000    0x5ea9b StdPeriph_Driver/src/stm32f4xx_gpio.o

@@ -4,12 +4,13 @@
 #define LED_PORT GPIOD
 #define LED_PIN  GPIO_Pin_10
 
+// Delay ajustado
 void delay(volatile int t) {
-    while(t--);
+    for (volatile int i = 0; i < t * 10000; i++);
 }
 
-// Base de tiempo (modificable)
-int tiempo_base = 3000000;
+// Base de tiempo
+int tiempo_base = 50;
 
 // Convierte tecla a cantidad de parpadeos
 int convertir_tecla(char k)
@@ -25,10 +26,10 @@ void actualizar_tiempo(char k)
 {
     switch(k)
     {
-        case 'A': tiempo_base = 500000; break;   // ~50ms
-        case 'B': tiempo_base = 900000; break;   // ~90ms
-        case 'C': tiempo_base = 1100000; break;  // ~110ms
-        case 'D': tiempo_base = 2200000; break;  // ~220ms
+        case 'A': tiempo_base = 50; break;
+        case 'B': tiempo_base = 90; break;
+        case 'C': tiempo_base = 110; break;
+        case 'D': tiempo_base = 220; break;
     }
 }
 
@@ -74,16 +75,12 @@ int main(void)
 
         if (k != 0)
         {
-            // Si es letra → cambia velocidad
             actualizar_tiempo(k);
 
-            // Si es número → parpadea
             int veces = convertir_tecla(k);
             if (veces > 0) {
                 parpadear(veces);
             }
-
-            // Espera liberación
             while(teclado_getKey() != 0) {
                 teclado_update();
             }
