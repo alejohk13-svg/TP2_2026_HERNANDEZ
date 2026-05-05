@@ -49,7 +49,7 @@ static estado_t estado = ESTADO_INICIAL;
 static char tecla_detectada = 0;
 static int contador = 0;
 
-#define DEBOUNCE_DELAY 50000
+#define DEBOUNCE_DELAY 20
 
 // INIT
 
